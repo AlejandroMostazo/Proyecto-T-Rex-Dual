@@ -4,10 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.example.fx.event.PrimaryController;
 
 import java.io.IOException;
 
@@ -19,7 +17,7 @@ public class App extends Application {
     private static Scene scene;
 
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
+        scene = new Scene(loadFXML("inicio"));
         stage.setTitle("Juego T-rex");
         stage.getIcons().add(new Image(App.class.getResourceAsStream("/static/dino.png")));
         stage.setScene(scene);

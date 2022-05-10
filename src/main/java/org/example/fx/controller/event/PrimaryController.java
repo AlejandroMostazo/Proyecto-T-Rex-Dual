@@ -1,11 +1,12 @@
-package org.example.fx.event;
+package org.example.fx.controller.event;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.EventListener;
 import java.util.ResourceBundle;
 
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -13,13 +14,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.fx.App;
+import org.example.fx.modelBDD.Impl.CityManagerImpl;
+import org.example.fx.modelBDD.Impl.PlayerManagerImpl;
+import org.example.fx.modelBDD.main.MySQLConnector;
 
 public class PrimaryController implements Initializable, EventListener {
 
@@ -115,5 +118,6 @@ public class PrimaryController implements Initializable, EventListener {
                     System.out.println(keyEvent.getCode());
             }
         });
+
     }
 }
