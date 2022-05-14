@@ -14,13 +14,15 @@ public class Player implements Comparable<Player>{
 
     int id;
     String name;
-    int puntuacion;
+    String contraseña;
+
+
 
     public Player(ResultSet result) {
         try {
-            this.id = result.getInt("puesto");
+            this.id = result.getInt("id");
             this.name = result.getString("nombre");
-            this.puntuacion = result.getInt("puntuacion");
+            this.contraseña = result.getString("contraseña");
         } catch (SQLException e) {
             e.printStackTrace();
         }

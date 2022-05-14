@@ -16,7 +16,7 @@
       </ImageView>
       <ImageView fx:id="trex" fitHeight="101.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" translateX="78.0" translateY="256.0">
          <image>
-            <Image url="@../../../static/dino.png" />
+            <Image url="@../../../static/dinoanimacon.gif" />
          </image>
       </ImageView>
       <ImageView fx:id="cactuc" fitHeight="93.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" translateX="854.0" translateY="260.0">
@@ -42,6 +42,7 @@
             <Image url="@../../../static/cactuc.png" />
          </image>
       </ImageView>
-      <Button fx:id="ranking" layoutX="419.0" layoutY="281.0" mnemonicParsing="false" onAction="#switchToSecondary" style="-fx-opacity: 0;" text="Ranking" />
+      <Button fx:id="ranking" layoutX="381.0" layoutY="278.0" mnemonicParsing="false" onAction="#switchToSecondary" style="-fx-opacity: 0;" text="Ranking" />
+      <Button fx:id="cerrarSesion" layoutX="451.0" layoutY="278.0" mnemonicParsing="false" onAction="#switchToInicio" style="-fx-opacity: 0;" text="Cerrar Sesion" />
    </children>
 </AnchorPane>

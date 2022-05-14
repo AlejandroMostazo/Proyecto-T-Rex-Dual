@@ -2,10 +2,14 @@ package org.example.fx.modelBDD.Impl;
 
 
 import org.example.fx.modelBDD.dao.Player;
+import org.example.fx.modelBDD.dao.Score;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 /**
@@ -17,32 +21,32 @@ import java.util.List;
  *
  */
 
-public class PlayerManagerImpl {
+public class ScoreManagerImpl {
 
-    public List<Player> findAll(Connection con) {
-        // Create general statement
-        try (Statement stmt = con.createStatement()) {
-            // Queries the DB
-            ResultSet result = stmt.executeQuery("SELECT * FROM juego.player order by 3");
-            // Set before first registry before going through it.
-            result.beforeFirst();
-
-            // Initializes variables
-            List<Player> players = new ArrayList<>();
-
-            // Run through each result
-            while (result.next()) {
-                // Initializes a city per result
-                players.add(new Player(result));
-                // Groups the countried by city
-            }
-            return players;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public List<Score> findAll(Connection con) {
+//        // Create general statement
+//        try (Statement stmt = con.createStatement()) {
+//            // Queries the DB
+//            ResultSet result = stmt.executeQuery("select  juego.player.nombre, MAX(puntuacion) as 'top', juego.score.date from juego.player join juego.score on (player.id=score.idplayer) group by juego.player.id order by 2 desc ");
+//            // Set before first registry before going through it.
+//            result.beforeFirst();
+//
+//            // Initializes variables
+//            List<Score> players = new ArrayList<>();
+//
+//            // Run through each result
+//            while (result.next()) {
+//                // Initializes a city per result
+//                players.add(new Score(result));
+//                // Groups the countried by city
+//            }
+//            return players;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
 //    public City findById(Connection con, int id) {
 //        //prepare SQL statement
@@ -80,37 +84,37 @@ public class PlayerManagerImpl {
 //    }
 //
 //
-    public Player findByName(Connection con, String name) {
-        //prepare SQL statement
-        String sql = "select * "
-                + "from juego.player "
-                + "where nombre = ? ";
-
-        // Create general statement
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            //Add Parameters
-            stmt.setString(1, name);
-            // Queries the DB
-            ResultSet result = stmt.executeQuery();
-            // Set before first registry before going through it.
-            result.beforeFirst();
-
-            // Initialize variable
-            Player player = null;
-
-            // Run through each result
-            while (result.next()) {
-                // Initializes a city per result
-                player = new Player(result);
-            }
-
-            return player;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public Player findByName(Connection con, String name) {
+//        //prepare SQL statement
+//        String sql = "select * "
+//                + "from juego.player "
+//                + "where nombre = ? ";
+//
+//        // Create general statement
+//        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+//            //Add Parameters
+//            stmt.setString(1, name);
+//            // Queries the DB
+//            ResultSet result = stmt.executeQuery();
+//            // Set before first registry before going through it.
+//            result.beforeFirst();
+//
+//            // Initialize variable
+//            Player player = null;
+//
+//            // Run through each result
+//            while (result.next()) {
+//                // Initializes a city per result
+//                player = new Player(result);
+//            }
+//
+//            return player;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 //
 //    public City endLetter(Connection con, String end) {
 //        //prepare SQL statement
@@ -200,13 +204,11 @@ public class PlayerManagerImpl {
 //        }
 //    }
 //
-    public void Insert(Connection con, String nombre, String contraseña) {
+    public void Insert(Connection con, int puntuacion, LocalDateTime fecha, int idplayer) {
 
-            String sql = ("INSERT INTO juego.player (nombre, contraseña) VALUE('"+nombre+"', '"+contraseña+"')");
+            String sql = ("INSERT INTO juego.score (puntuacion, score.date, idplayer) VALUE('"+puntuacion+"', '"+fecha+"', "+idplayer+")");
             //prepare SQL statement
             try(PreparedStatement st = con.prepareStatement(sql)) {
-
-
                 //Set before first registry before going through it.
                 st.executeUpdate(sql);
 

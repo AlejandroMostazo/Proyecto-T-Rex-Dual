@@ -2,7 +2,7 @@ package org.example.fx.controller.event;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -14,9 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.fx.App;
-import org.example.fx.modelBDD.Impl.PlayerManagerImpl;
-import org.example.fx.modelBDD.dao.Player;
-import org.example.fx.modelBDD.main.MySQLConnector;
+import org.example.fx.modelBDD.dao.Join;
+import org.example.fx.services.SecondaryService;
 
 public class SecondaryController implements Initializable {
 
@@ -26,33 +25,51 @@ public class SecondaryController implements Initializable {
     }
 
     @FXML
-    private TableView tabla;
+    public void switchToInicio() throws IOException {
+        App.setRoot("inicio");
+    }
 
     @FXML
-    private TableColumn column;
+    private TableView tabla;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        column.setCellValueFactory(
-                new PropertyValueFactory<Player, String>("nombre"));
+        TableColumn<Join, String> nombre = new TableColumn<>("Nombre");
+        nombre.setMinWidth(100);
+        TableColumn<Join, Integer> Score = new TableColumn<>("Score");
+        Score.setMinWidth(100);
+        TableColumn<Join, Date> fecha = new TableColumn<>("Fecha");
+        fecha.setMinWidth(100);
 
-         final ObservableList<Player> data =
-                FXCollections.observableArrayList(
-                        new Player(2, "Smith", 12),
-                        new Player(3, "Johnson", 0)
-                );
-        tabla.setItems(data);
-        tabla.getColumns().addAll(column);
 
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+        nombre.setCellValueFactory(
+                new PropertyValueFactory<Join, String>("nombre"));
 
+        Score.setCellValueFactory(
+                new PropertyValueFactory<Join, Integer>("puntuacion"));
+
+        fecha.setCellValueFactory(
+                new PropertyValueFactory<>("fecha"));
+
+
+        SecondaryService service = new SecondaryService();
+
+        final ObservableList<Join> data;
+        try {
+            data = FXCollections.observableArrayList(
+                    service.ranking()
+            );
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        tabla.getItems().addAll(data);
+        tabla.getColumns().addAll(nombre, Score, fecha);
+
 
     }
 }

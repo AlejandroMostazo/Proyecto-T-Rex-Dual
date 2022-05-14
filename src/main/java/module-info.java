@@ -8,4 +8,7 @@ module org.example.fx {
     exports org.example.fx;
     exports org.example.fx.controller.event;
     opens org.example.fx.controller.event to javafx.fxml;
+
+    exports org.example.fx.modelBDD.dao;
+    opens org.example.fx.modelBDD.dao to javafx.fxml;
 }
