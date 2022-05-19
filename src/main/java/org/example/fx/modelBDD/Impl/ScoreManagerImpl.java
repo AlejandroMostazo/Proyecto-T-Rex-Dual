@@ -23,30 +23,30 @@ import java.util.stream.Stream;
 
 public class ScoreManagerImpl {
 
-//    public List<Score> findAll(Connection con) {
-//        // Create general statement
-//        try (Statement stmt = con.createStatement()) {
-//            // Queries the DB
-//            ResultSet result = stmt.executeQuery("select  juego.player.nombre, MAX(puntuacion) as 'top', juego.score.date from juego.player join juego.score on (player.id=score.idplayer) group by juego.player.id order by 2 desc ");
-//            // Set before first registry before going through it.
-//            result.beforeFirst();
-//
-//            // Initializes variables
-//            List<Score> players = new ArrayList<>();
-//
-//            // Run through each result
-//            while (result.next()) {
-//                // Initializes a city per result
-//                players.add(new Score(result));
-//                // Groups the countried by city
-//            }
-//            return players;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+    public List<Score> findAll(Connection con) {
+        // Create general statement
+        try (Statement stmt = con.createStatement()) {
+            // Queries the DB
+            ResultSet result = stmt.executeQuery("select  juego.player.nombre, MAX(puntuacion) as 'top', juego.score.date from juego.player join juego.score on (player.id=score.idplayer) group by juego.player.id order by 2 desc ");
+            // Set before first registry before going through it.
+            result.beforeFirst();
+
+            // Initializes variables
+            List<Score> players = new ArrayList<>();
+
+            // Run through each result
+            while (result.next()) {
+                // Initializes a city per result
+                players.add(new Score(result));
+                // Groups the countried by city
+            }
+            return players;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 //    public City findById(Connection con, int id) {
 //        //prepare SQL statement

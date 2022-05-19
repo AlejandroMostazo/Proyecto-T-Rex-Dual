@@ -2,13 +2,9 @@ package org.example.fx.controller.event;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.EventListener;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javafx.fxml.FXML;
@@ -19,17 +15,17 @@ import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.fx.App;
+import org.example.fx.controller.event.exeption.UserNotValidExeption;
 import org.example.fx.modelBDD.dao.Player;
-import org.example.fx.modelBDD.main.MySQLConnector;
 import org.example.fx.services.InicioService;
 
 public class InicioController implements Initializable, EventListener {
-
 
     @FXML
     private TextField text;
 
     InicioService service = new InicioService();
+
     @Getter
     @Setter
     static int idJugador;
@@ -47,8 +43,6 @@ public class InicioController implements Initializable, EventListener {
     }
 
 
-
-
     @FXML
     private PasswordField password;
 
@@ -62,50 +56,46 @@ public class InicioController implements Initializable, EventListener {
     private Text existe;
 
     public void crearJugador () {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            if (service.buscarJugadorByName(text.getText()) == null && !(text.getText().equals("")) && !(password.getText().equals(""))) {
+        try {
+            if (!(text.getText().equals("")) && !(password.getText().equals("")) && service.buscarJugadorByName(text.getText()) == null) {
                 service.insertarJugador(text.getText(), password.getText());
                 System.out.println(service.buscarJugadores());
                 setIdJugador(conseguirID());
                 System.out.println(getIdJugador());
                 App.setRoot("primary");
             } else {
-                existe.setVisible(true);
-                noExiste.setVisible(false);
-                error.setVisible(true);
-                text.clear();
-                password.clear();
+                throw new UserNotValidExeption("Ususario ya existente");
             }
-        } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        }catch (UserNotValidExeption e) {
+            existe.setVisible(true);
+            noExiste.setVisible(false);
+            error.setVisible(true);
+            text.clear();
+            password.clear();
+            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void iniciarSesion () {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            if (service.buscarJugadorByName(text.getText()) != null) {
-                String nombreJugador = Stream.of(service.buscarJugadorByName(text.getText())).map(Player::getName).collect(Collectors.joining());
-                String contraseñaJugador = Stream.of(service.buscarJugadorByName(text.getText())).map(Player::getContraseña).collect(Collectors.joining());
-
-                if (text.getText().toLowerCase(Locale.ROOT).equals(nombreJugador.toLowerCase(Locale.ROOT)) && password.getText().equals(contraseñaJugador)) {
-                    System.out.println(service.buscarJugadores());
-                    setIdJugador(conseguirID());
-                    System.out.println(getIdJugador());
-                    App.setRoot("primary");
-                }
+        try {
+            if (service.validarJugador(text.getText(), password.getText())) {
+                System.out.println(service.buscarJugadores());
+                setIdJugador(conseguirID());
+                System.out.println(getIdJugador());
+                App.setRoot("primary");
+            } else {
+                throw new UserNotValidExeption("Usuario o contraseña invalidos");
             }
-
+        } catch (UserNotValidExeption e) {
             error.setVisible(true);
             noExiste.setVisible(true);
             existe.setVisible(false);
             text.clear();
             password.clear();
-
-        } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException | IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

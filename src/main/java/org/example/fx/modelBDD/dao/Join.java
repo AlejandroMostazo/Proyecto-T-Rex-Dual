@@ -11,8 +11,10 @@ import java.sql.SQLException;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Join implements Comparable<Join>{
 
+    int puesto;
     String nombre;
     int puntuacion;
     Date fecha;
@@ -21,10 +23,12 @@ public class Join implements Comparable<Join>{
 
     public Join(ResultSet result) {
         try {
+            this.puesto = result.getInt("puesto");
             this.nombre = result.getString("nombre");
             this.puntuacion = result.getInt("top");
             this.fecha = result.getDate("date");
         } catch (SQLException e) {
+            System.out.println("No se puede acceder a la tabla Join de la base de datos");
             e.printStackTrace();
         }
     }

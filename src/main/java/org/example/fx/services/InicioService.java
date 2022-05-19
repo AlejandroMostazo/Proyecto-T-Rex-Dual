@@ -28,6 +28,12 @@ public class InicioService {
         }
     }
 
+    public boolean validarJugador(String nombre, String contraseña) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+           return new PlayerManagerImpl().validatePlayer(con, nombre, contraseña) != null;
+        }
+    }
+
     public Player buscarJugadorByName (String nombre) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             return new PlayerManagerImpl().findByName(con, nombre);

@@ -27,8 +27,8 @@
       </TableView>
         <Button fx:id="cerrarSesion" layoutX="464.0" layoutY="401.0" onAction="#switchToInicio" text="Cerrar sesión" />
       <Button fx:id="jugar" layoutX="350.0" layoutY="401.0" onAction="#switchToPrimary" text="Volver a Jugar" />
-      <Button fx:id="jugar1" layoutX="381.0" layoutY="74.0" onAction="#switchToPrimary" text="Mundial" />
-      <Button fx:id="cerrarSesion1" layoutX="464.0" layoutY="74.0" onAction="#switchToInicio" text="Personal" />
+      <Button fx:id="mundial" layoutX="381.0" layoutY="74.0" onAction="#rankingMundial" text="Mundial" />
+      <Button fx:id="personal" layoutX="464.0" layoutY="74.0" onAction="#rankingIndividual" text="Personal" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../static/nube.png" />

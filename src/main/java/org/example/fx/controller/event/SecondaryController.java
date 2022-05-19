@@ -32,10 +32,49 @@ public class SecondaryController implements Initializable {
     @FXML
     private TableView tabla;
 
+    public void rankingMundial() {
+
+        tabla.getItems().clear();
+
+        SecondaryService service = new SecondaryService();
+
+        final ObservableList<Join> data;
+
+        try {
+            data = FXCollections.observableArrayList(
+                    service.ranking()
+            );
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("no se puede mostrar el ranking");
+            throw new RuntimeException(e);
+        }
+        tabla.getItems().addAll(data);
+    }
+
+
+    public void rankingIndividual() {
+
+        tabla.getItems().clear();
+
+        SecondaryService service = new SecondaryService();
+
+        final ObservableList<Join> data;
+        try {
+            data = FXCollections.observableArrayList(
+                    service.rankingById(new InicioController().getIdJugador())
+            );
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No se puede mostrar el ranking individual");
+            throw new RuntimeException(e);
+        }
+        tabla.getItems().addAll(data);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        TableColumn<Join, Integer> puesto = new TableColumn<>("TOP");
+        puesto.setMinWidth(100);
         TableColumn<Join, String> nombre = new TableColumn<>("Nombre");
         nombre.setMinWidth(100);
         TableColumn<Join, Integer> Score = new TableColumn<>("Score");
@@ -43,7 +82,14 @@ public class SecondaryController implements Initializable {
         TableColumn<Join, Date> fecha = new TableColumn<>("Fecha");
         fecha.setMinWidth(100);
 
+        puesto.setStyle( "-fx-alignment: CENTER;");
+        nombre.setStyle( "-fx-alignment: CENTER;");
+        Score.setStyle( "-fx-alignment: CENTER;");
+        fecha.setStyle( "-fx-alignment: CENTER;");
 
+
+        puesto.setCellValueFactory(
+                new PropertyValueFactory<Join, Integer>("puesto"));
         nombre.setCellValueFactory(
                 new PropertyValueFactory<Join, String>("nombre"));
 
@@ -53,22 +99,10 @@ public class SecondaryController implements Initializable {
         fecha.setCellValueFactory(
                 new PropertyValueFactory<>("fecha"));
 
+        rankingMundial();
 
-        SecondaryService service = new SecondaryService();
+        tabla.getColumns().addAll(puesto, nombre, Score, fecha);
 
-        final ObservableList<Join> data;
-        try {
-            data = FXCollections.observableArrayList(
-                    service.ranking()
-            );
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        tabla.getItems().addAll(data);
-        tabla.getColumns().addAll(nombre, Score, fecha);
 
 
     }

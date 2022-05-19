@@ -28,6 +28,7 @@ public class Score implements Comparable<Score>{
             this.puntuacion = result.getInt("puntuacion");
             this.fecha = result.getDate("idplayer");
         } catch (SQLException e) {
+            System.out.println("No se puede acceder a la base de datos");
             e.printStackTrace();
         }
     }

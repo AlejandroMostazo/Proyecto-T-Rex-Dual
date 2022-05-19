@@ -111,6 +111,43 @@ public class PlayerManagerImpl {
             return null;
         }
     }
+
+
+    public Player validatePlayer(Connection con, String name, String contraseña) {
+        //prepare SQL statement
+        String sql = "select * "
+                + "from juego.player "
+                + "where nombre = ? and contraseña = ?";
+
+        // Create general statement
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            //Add Parameters
+            stmt.setString(1, name);
+            stmt.setString(2, contraseña);
+            // Queries the DB
+            ResultSet result = stmt.executeQuery();
+            // Set before first registry before going through it.
+            result.beforeFirst();
+
+            // Initialize variable
+            Player player = null;
+
+            // Run through each result
+            while (result.next()) {
+                // Initializes a city per result
+                player = new Player(result);
+            }
+
+            return player;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 //
 //    public City endLetter(Connection con, String end) {
 //        //prepare SQL statement

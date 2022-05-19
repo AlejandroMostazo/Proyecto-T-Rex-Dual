@@ -10,6 +10,7 @@ import java.sql.SQLException;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Player implements Comparable<Player>{
 
     int id;
@@ -24,6 +25,7 @@ public class Player implements Comparable<Player>{
             this.name = result.getString("nombre");
             this.contraseña = result.getString("contraseña");
         } catch (SQLException e) {
+            System.out.println("No se puede acceder a la tabla Player de la base de datos");
             e.printStackTrace();
         }
     }

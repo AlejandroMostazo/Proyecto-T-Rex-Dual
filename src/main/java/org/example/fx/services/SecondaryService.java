@@ -32,13 +32,14 @@ public class SecondaryService {
         }
     }
 
-//    public Player buscarJugadorByName (String nombre) throws SQLException, ClassNotFoundException {
-//        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-//            return new PlayerManagerImpl().findByName(con, nombre);
-//        } catch (SQLException | ClassNotFoundException e) {
-//            throw e;
-//        }
-//    }
+
+    public List<Join> rankingById (int id) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return new JoinManagerImpl().findById(con, id);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw e;
+        }
+    }
 
 }
 
