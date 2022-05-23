@@ -114,6 +114,9 @@ public class PlayerManagerImpl {
 
 
     public Player validatePlayer(Connection con, String name, String contraseña) {
+
+
+
         //prepare SQL statement
         String sql = "select * "
                 + "from juego.player "

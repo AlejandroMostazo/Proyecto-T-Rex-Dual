@@ -6,13 +6,15 @@ import org.example.fx.modelBDD.main.MySQLConnector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
 public class InicioService {
 
     public void insertarJugador(String nombre, String contraseña) {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            new PlayerManagerImpl().Insert(con, nombre, contraseña);
+            String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
+            new PlayerManagerImpl().Insert(con, nombre, encodedString);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -22,6 +24,7 @@ public class InicioService {
 
     public List<Player> buscarJugadores () throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
            return new PlayerManagerImpl().findAll(con);
         } catch (SQLException | ClassNotFoundException e) {
             throw e;
@@ -30,7 +33,8 @@ public class InicioService {
 
     public boolean validarJugador(String nombre, String contraseña) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-           return new PlayerManagerImpl().validatePlayer(con, nombre, contraseña) != null;
+            String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
+           return new PlayerManagerImpl().validatePlayer(con, nombre, encodedString) != null;
         }
     }
 

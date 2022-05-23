@@ -2,6 +2,8 @@ package org.example.fx.controller.event;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.EventListener;
 import java.util.ResourceBundle;
@@ -15,8 +17,10 @@ import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.fx.App;
+import org.example.fx.controller.event.exeption.ConnectionExeption;
 import org.example.fx.controller.event.exeption.UserNotValidExeption;
 import org.example.fx.modelBDD.dao.Player;
+import org.example.fx.modelBDD.main.MySQLConnector;
 import org.example.fx.services.InicioService;
 
 public class InicioController implements Initializable, EventListener {
@@ -35,9 +39,7 @@ public class InicioController implements Initializable, EventListener {
             try {
                 int[] i = Stream.of(service.buscarJugadorByName(text.getText())).mapToInt(Player::getId).toArray();
                 return i[0];
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
     }
@@ -103,5 +105,12 @@ public class InicioController implements Initializable, EventListener {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        try {
+            new MySQLConnector().getMySQLConnection();
+        } catch (ClassNotFoundException | SQLException e) {
+            new ConnectionExeption("No se puede conectar a la base de datos");
+            error.setVisible(true);
+            throw new RuntimeException(e);
+        }
     }
 }

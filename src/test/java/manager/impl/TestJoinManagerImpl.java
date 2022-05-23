@@ -1,3 +1,5 @@
+package manager.impl;
+
 import org.example.fx.modelBDD.Impl.JoinManagerImpl;
 import org.example.fx.modelBDD.dao.Join;
 import org.hamcrest.MatcherAssert;
