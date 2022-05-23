@@ -2,8 +2,6 @@ package org.example.fx.controller.event;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.EventListener;
 import java.util.ResourceBundle;
@@ -37,8 +35,7 @@ public class InicioController implements Initializable, EventListener {
 
     public int conseguirID() {
             try {
-                int[] i = Stream.of(service.buscarJugadorByName(text.getText())).mapToInt(Player::getId).toArray();
-                return i[0];
+                return Stream.of(service.buscarJugadorByName(text.getText())).mapToInt(Player::getId).findFirst().getAsInt();
             } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

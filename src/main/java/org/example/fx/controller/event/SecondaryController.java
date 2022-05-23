@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -79,7 +82,7 @@ public class SecondaryController implements Initializable {
         nombre.setMinWidth(100);
         TableColumn<Join, Integer> Score = new TableColumn<>("Score");
         Score.setMinWidth(100);
-        TableColumn<Join, Date> fecha = new TableColumn<>("Fecha");
+        TableColumn<Join, String> fecha = new TableColumn<>("Fecha");
         fecha.setMinWidth(100);
 
         puesto.setStyle( "-fx-alignment: CENTER;");
@@ -96,8 +99,10 @@ public class SecondaryController implements Initializable {
         Score.setCellValueFactory(
                 new PropertyValueFactory<Join, Integer>("puntuacion"));
 
-        fecha.setCellValueFactory(
-                new PropertyValueFactory<>("fecha"));
+//        fecha.setCellValueFactory(
+//                new PropertyValueFactory<Join, LocalDateTime>("fecha"));
+
+        fecha.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getFecha().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
 
         rankingMundial();
 

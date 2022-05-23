@@ -84,7 +84,7 @@ public class PlayerManagerImpl {
         //prepare SQL statement
         String sql = "select * "
                 + "from juego.player "
-                + "where nombre = ? ";
+                + "where nombre = ? order by 2";
 
         // Create general statement
         try (PreparedStatement stmt = con.prepareStatement(sql)) {

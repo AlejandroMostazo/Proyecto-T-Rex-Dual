@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Getter
 @Setter
@@ -16,8 +18,7 @@ public class Score implements Comparable<Score>{
 
     int id;
     int puntuacion;
-    Date fecha;
-
+    LocalDateTime fecha;
     int player;
 
 
@@ -26,7 +27,8 @@ public class Score implements Comparable<Score>{
         try {
             this.id = result.getInt("id");
             this.puntuacion = result.getInt("puntuacion");
-            this.fecha = result.getDate("idplayer");
+            this.player = result.getInt("idplayer");
+            this.fecha = result.getDate("date").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         } catch (SQLException e) {
             System.out.println("No se puede acceder a la base de datos");
             e.printStackTrace();

@@ -1,8 +1,8 @@
 package dao;
 
 import org.example.fx.modelBDD.dao.Join;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -10,14 +10,15 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -40,7 +41,7 @@ public class JoinTest {
         System.out.println("========BeforeEach========");
         join = new Join();
         join.setNombre("Felipe");
-        join.setFecha(new Date(2022, 05, 20));
+        join.setFecha(LocalDateTime.now());
         join.setPuesto(1);
         join.setPuntuacion(1000);
     }
@@ -59,20 +60,19 @@ public class JoinTest {
     @Test
     public void setFecha_ok(){
         assumeTrue(join != null);
-        Date nuevafecha = new Date(122, 4, 20);
+        LocalDateTime nuevafecha = LocalDateTime.now();
         join.setFecha(nuevafecha);
-        assertEquals(new Date(122, 4, 20), join.getFecha());
+        assertThat(new Date(122, 4, 20), is(join.getFecha()));
     }
 
     @Test
     public void setPuesto_ok(){
         assumeTrue(join != null);
-        String nombre = "Mesa";
-        join.setNombre(nombre);
+        int newpuesto = 1;
+        join.setPuesto(newpuesto);
         assertAll(
-                () -> assertEquals(nombre, join.getNombre()),
-                () -> assertEquals(1, join.getPuesto()),
-                () -> assertEquals(1000, join.getPuntuacion()));
+                () -> assertThat(newpuesto, is(join.getPuesto())),
+                () -> assertThat(1000, is(join.getPuntuacion())));
     }
 
     @Test
@@ -81,9 +81,9 @@ public class JoinTest {
         String nombre = "Mesa";
         join.setNombre(nombre);
         assertAll(
-                () -> assertEquals(nombre, join.getNombre()),
-                () -> assertEquals(1, join.getPuesto()),
-                () -> assertEquals(1000, join.getPuntuacion()));
+                () -> assertThat(nombre, is(join.getNombre())),
+                () -> assertThat(1, is(join.getPuesto())),
+                () -> assertThat(1000, is(join.getPuntuacion())));
     }
 
     @Test
@@ -93,10 +93,10 @@ public class JoinTest {
                 .puesto(1)
                 .nombre("Google")
                 .puntuacion(992)
-                .fecha(new Date(2022- 5 -14))
+                .fecha(LocalDateTime.of(2022, 5, 14, 0, 0, 0))
                 .build();
 
-        when(resultSet.getDate(any())).thenReturn(expectedJoin.getFecha());
+        when(resultSet.getDate(any())).thenReturn((Date) java.util.Date.from(expectedJoin.getFecha().atZone(ZoneId.systemDefault()).toInstant()));
         when(resultSet.getString(any())).thenReturn(expectedJoin.getNombre());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
@@ -114,15 +114,15 @@ public class JoinTest {
 
         Join actualJoin = new Join(resultSet);
 
-        MatcherAssert.assertThat(actualJoin, Matchers.is(expectedJoin));
+        assertThat(actualJoin, is(expectedJoin));
     }
 
-//    @Test
-//    public void allArgConstructor_ok(){
-//        assumeTrue(join != null);
-//        Join join2 = new Join(join.getPuesto(), join.getNombre(),  join.getPuntuacion(),
-//                join.getFecha());
-//       assertThat(join, is(join2));
-//    }
+    @Test
+    public void allArgConstructor_ok(){
+        assumeTrue(join != null);
+        Join join2 = new Join(join.getPuesto(), join.getNombre(),  join.getPuntuacion(),
+                join.getFecha());
+       assertThat(join, is(join2));
+    }
 
 }

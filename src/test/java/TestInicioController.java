@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.awt.*;
+import javafx.scene.control.TextField;
 
 import static org.mockito.Mockito.when;
 
@@ -15,6 +15,7 @@ public class TestInicioController {
 
     @Mock
     private TextField text;
+
 
 
     @Test

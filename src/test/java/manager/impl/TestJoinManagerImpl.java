@@ -13,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -45,7 +47,7 @@ class TestJoinManagerImpl {
                 .puesto(1)
                 .nombre("Google")
                 .puntuacion(992)
-                .fecha(new Date(2022- 5 -14))
+                .fecha(LocalDateTime.of(2022, 5, 14, 0, 0))
                 .build();
 
         when(connection.createStatement()).thenReturn(statement);
@@ -64,7 +66,7 @@ class TestJoinManagerImpl {
                 }
             }
         });
-        when(resultSet.getDate(any())).thenReturn(expectedJoin.getFecha());
+        when(resultSet.getDate(any())).thenReturn((Date) java.util.Date.from(expectedJoin.getFecha().atZone(ZoneId.systemDefault()).toInstant()));
         when(resultSet.getString(any())).thenReturn(expectedJoin.getNombre());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
@@ -94,7 +96,7 @@ class TestJoinManagerImpl {
                 .puesto(1)
                 .nombre("Google")
                 .puntuacion(992)
-                .fecha(new Date(2022- 5 -14))
+                .fecha(LocalDateTime.of(2022, 5,14, 12, 18, 29))
                 .build();
 
         when(connection.prepareStatement(any())).thenReturn(preparedStatement);
@@ -114,7 +116,7 @@ class TestJoinManagerImpl {
             }
         });
 
-        when(resultSet.getDate(any())).thenReturn(expectedJoin.getFecha());
+        when(resultSet.getDate(any())).thenReturn((Date) java.util.Date.from(expectedJoin.getFecha().atZone(ZoneId.systemDefault()).toInstant()));
         when(resultSet.getString(any())).thenReturn(expectedJoin.getNombre());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
@@ -149,7 +151,7 @@ class TestJoinManagerImpl {
     }
 
     @Test
-    void findCitiesByCountryCode_ko() throws SQLException {
+    void findByid_ko() throws SQLException {
 
         when(connection.prepareStatement(any())).thenThrow(new SQLException("Esto es un error probocado"));
 
