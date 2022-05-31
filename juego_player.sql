@@ -25,11 +25,13 @@ DROP TABLE IF EXISTS `player`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `player` (
-  `puesto` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
-  `puntuacion` int DEFAULT NULL,
-  PRIMARY KEY (`puesto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `contraseña` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre_UNIQUE` (`nombre`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +40,7 @@ CREATE TABLE `player` (
 
 LOCK TABLES `player` WRITE;
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` VALUES (1,'Monsty',0),(2,'',0);
+INSERT INTO `player` VALUES (10,'Monsty','123'),(11,'Felipe','ekisde'),(12,'Google','google'),(13,'T-Rex','1234'),(14,'Edu','123'),(15,'Antonio','123'),(16,'Juan','123'),(17,'Juanjo','ekisde'),(18,'nuria','123'),(19,'?','?'),(20,'Encriptado','aG9sYQ==');
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-10  9:01:53
+-- Dump completed on 2022-05-25 12:27:55
