@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="458.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.fx.controller.event.SecondaryController">
+<AnchorPane prefHeight="458.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.fx.controller.SecondaryController">
    <children>
         <Label layoutX="353.0" layoutY="21.0" text="Ranking Mundial" textAlignment="CENTER">
          <font>

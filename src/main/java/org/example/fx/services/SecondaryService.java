@@ -1,11 +1,9 @@
 package org.example.fx.services;
 
-import org.example.fx.modelBDD.Impl.JoinManagerImpl;
-import org.example.fx.modelBDD.Impl.PlayerManagerImpl;
-import org.example.fx.modelBDD.Impl.ScoreManagerImpl;
+import org.example.fx.modelBDD.manager.impl.JoinManagerImpl;
+
 import org.example.fx.modelBDD.dao.Join;
-import org.example.fx.modelBDD.dao.Player;
-import org.example.fx.modelBDD.dao.Score;
+
 import org.example.fx.modelBDD.main.MySQLConnector;
 
 import java.sql.Connection;

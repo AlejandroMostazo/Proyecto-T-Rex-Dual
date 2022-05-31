@@ -1,30 +1,23 @@
-package org.example.fx.controller.event;
+package org.example.fx.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.EventListener;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.fx.App;
-import org.example.fx.controller.event.exeption.KeyNotValidExeption;
+import org.example.fx.controller.exeption.KeyNotValidException;
 import org.example.fx.services.PrimaryService;
 
 public class PrimaryController implements Initializable, EventListener {
@@ -64,7 +57,7 @@ public class PrimaryController implements Initializable, EventListener {
     @FXML
     private Button cerrarSesion;
 
-    private TranslateTransition translaterex = new TranslateTransition();
+    private TranslateTransition translaterex;
 
 
     @FXML
@@ -91,7 +84,7 @@ public class PrimaryController implements Initializable, EventListener {
     }
 
     public boolean gameOver () {
-        if (((cactuc.getTranslateX() < trex.getTranslateX()+50 && cactuc.getTranslateX() > trex.getTranslateX()) || (cactuc1.getTranslateX() < trex.getTranslateX()+50 && cactuc1.getTranslateX() > trex.getTranslateX())) && trex.getTranslateY() >= 165 ) {
+        if ((isCactusInRange() || isCactus2InRange()) && trex.getTranslateY() >= 165 ) {
             animationTimer.stop();
             translaterex.stop();
             restart.setStyle("-fx-opacity: 1;");
@@ -99,12 +92,20 @@ public class PrimaryController implements Initializable, EventListener {
             cerrarSesion.setStyle("-fx-opacity: 1;");
             PrimaryService primaryService = new PrimaryService();
             System.out.println(LocalDateTime.now());
-            primaryService.isertarPuntuacion(puntuacion, LocalDateTime.now(), new InicioController().getIdJugador());
+            primaryService.insertarPuntuacion(puntuacion, LocalDateTime.now(), App.getIdJugador());
             return true;
         }  return false;
     }
 
-    public void restar() throws IOException {
+    private boolean isCactus2InRange() {
+        return cactuc1.getTranslateX() < trex.getTranslateX() + 50 && cactuc1.getTranslateX() > trex.getTranslateX();
+    }
+
+    private boolean isCactusInRange() {
+        return cactuc.getTranslateX() < trex.getTranslateX() + 50 && cactuc.getTranslateX() > trex.getTranslateX();
+    }
+
+    public void restart() throws IOException {
         App.setRoot("primary");
     }
 
@@ -145,17 +146,19 @@ public class PrimaryController implements Initializable, EventListener {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        translaterex = new TranslateTransition();
+
         animationTimer.start();
 
         anchorPane.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getText().matches("w") || keyEvent.getText().matches("W")) {
+            if (keyEvent.getText().matches("w|W")) {
                 salto();
                 System.out.println(keyEvent.getCode());
                 uvedoble.setVisible(false);
             } else {
                 try {
-                    throw new KeyNotValidExeption("Tecla equivocada");
-                } catch (KeyNotValidExeption e) {
+                    throw new KeyNotValidException("Tecla equivocada");
+                } catch (KeyNotValidException e) {
                     uvedoble.setVisible(true);
                     e.printStackTrace();
                 }

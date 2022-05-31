@@ -1,7 +1,8 @@
-package org.example.fx.modelBDD.Impl;
+package org.example.fx.modelBDD.manager.impl;
 
 
 import org.example.fx.modelBDD.dao.Join;
+import org.example.fx.modelBDD.manager.JoinMaganager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
  *
  */
 
-public class JoinManagerImpl {
+public class JoinManagerImpl implements JoinMaganager {
 
     public List<Join> findAll(Connection con) {
         // Create general statement

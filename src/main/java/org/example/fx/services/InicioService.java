@@ -1,6 +1,6 @@
 package org.example.fx.services;
 
-import org.example.fx.modelBDD.Impl.PlayerManagerImpl;
+import org.example.fx.modelBDD.manager.impl.PlayerManagerImpl;
 import org.example.fx.modelBDD.dao.Player;
 import org.example.fx.modelBDD.main.MySQLConnector;
 
@@ -14,10 +14,8 @@ public class InicioService {
     public void insertarJugador(String nombre, String contraseña) {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
-            new PlayerManagerImpl().Insert(con, nombre, encodedString);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+            new PlayerManagerImpl().insert(con, nombre, encodedString);
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

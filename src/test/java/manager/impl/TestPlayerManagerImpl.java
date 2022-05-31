@@ -1,7 +1,6 @@
 package manager.impl;
 
 
-import org.example.fx.modelBDD.dao.Join;
 import org.example.fx.modelBDD.dao.Player;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -14,10 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
-import org.example.fx.modelBDD.Impl.PlayerManagerImpl;
+import org.example.fx.modelBDD.manager.impl.PlayerManagerImpl;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

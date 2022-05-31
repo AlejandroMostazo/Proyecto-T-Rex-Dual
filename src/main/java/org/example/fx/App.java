@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 
@@ -14,11 +16,16 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    @Getter
+    @Setter
+    public static int idJugador;
+
     private static Scene scene;
 
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("inicio"));
         stage.setTitle("Juego T-rex");
+        stage.setResizable(false);
         stage.getIcons().add(new Image(App.class.getResourceAsStream("/static/dino.png")));
         stage.setScene(scene);
         stage.show();

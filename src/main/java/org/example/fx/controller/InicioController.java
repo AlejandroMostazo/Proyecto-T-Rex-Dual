@@ -1,4 +1,4 @@
-package org.example.fx.controller.event;
+package org.example.fx.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,34 +12,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.SneakyThrows;
 import org.example.fx.App;
-import org.example.fx.controller.event.exeption.ConnectionExeption;
-import org.example.fx.controller.event.exeption.UserNotValidExeption;
+import org.example.fx.controller.exeption.ConnectionException;
+import org.example.fx.controller.exeption.UserNotValidException;
+
 import org.example.fx.modelBDD.dao.Player;
 import org.example.fx.modelBDD.main.MySQLConnector;
 import org.example.fx.services.InicioService;
+
 
 public class InicioController implements Initializable, EventListener {
 
     @FXML
     private TextField text;
 
-    InicioService service = new InicioService();
-
-    @Getter
-    @Setter
-    static int idJugador;
-
-
-    public int conseguirID() {
-            try {
-                return Stream.of(service.buscarJugadorByName(text.getText())).mapToInt(Player::getId).findFirst().getAsInt();
-            } catch (SQLException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-    }
+    private InicioService service;
 
 
     @FXML
@@ -54,18 +42,24 @@ public class InicioController implements Initializable, EventListener {
     @FXML
     private Text existe;
 
+    private int conseguirID() {
+        try {
+            return Stream.of(service.buscarJugadorByName(text.getText())).mapToInt(Player::getId).findFirst().getAsInt();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void crearJugador () {
         try {
             if (!(text.getText().equals("")) && !(password.getText().equals("")) && service.buscarJugadorByName(text.getText()) == null) {
                 service.insertarJugador(text.getText(), password.getText());
-                System.out.println(service.buscarJugadores());
-                setIdJugador(conseguirID());
-                System.out.println(getIdJugador());
+                App.setIdJugador(conseguirID());
                 App.setRoot("primary");
             } else {
-                throw new UserNotValidExeption("Ususario ya existente");
+                throw new UserNotValidException("Ususario ya existente");
             }
-        }catch (UserNotValidExeption e) {
+        }catch (UserNotValidException e) {
             existe.setVisible(true);
             noExiste.setVisible(false);
             error.setVisible(true);
@@ -80,14 +74,12 @@ public class InicioController implements Initializable, EventListener {
     public void iniciarSesion () {
         try {
             if (service.validarJugador(text.getText(), password.getText())) {
-                System.out.println(service.buscarJugadores());
-                setIdJugador(conseguirID());
-                System.out.println(getIdJugador());
+                App.setIdJugador(conseguirID());
                 App.setRoot("primary");
             } else {
-                throw new UserNotValidExeption("Usuario o contraseña invalidos");
+                throw new UserNotValidException("Usuario o contraseña invalidos");
             }
-        } catch (UserNotValidExeption e) {
+        } catch (UserNotValidException e) {
             error.setVisible(true);
             noExiste.setVisible(true);
             existe.setVisible(false);
@@ -99,15 +91,17 @@ public class InicioController implements Initializable, EventListener {
         }
     }
 
+    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        service = new InicioService();
 
         try {
             new MySQLConnector().getMySQLConnection();
         } catch (ClassNotFoundException | SQLException e) {
-            new ConnectionExeption("No se puede conectar a la base de datos");
             error.setVisible(true);
-            throw new RuntimeException(e);
+            throw new ConnectionException("No se puede conectar a la base de datos");
         }
     }
 }

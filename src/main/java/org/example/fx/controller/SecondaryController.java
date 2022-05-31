@@ -1,10 +1,8 @@
-package org.example.fx.controller.event;
+package org.example.fx.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -21,6 +19,8 @@ import org.example.fx.modelBDD.dao.Join;
 import org.example.fx.services.SecondaryService;
 
 public class SecondaryController implements Initializable {
+
+    private SecondaryService secondaryService;
 
     @FXML
     public void switchToPrimary() throws IOException {
@@ -39,13 +39,12 @@ public class SecondaryController implements Initializable {
 
         tabla.getItems().clear();
 
-        SecondaryService service = new SecondaryService();
 
         final ObservableList<Join> data;
 
         try {
             data = FXCollections.observableArrayList(
-                    service.ranking()
+                    secondaryService.ranking()
             );
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("no se puede mostrar el ranking");
@@ -59,12 +58,10 @@ public class SecondaryController implements Initializable {
 
         tabla.getItems().clear();
 
-        SecondaryService service = new SecondaryService();
-
         final ObservableList<Join> data;
         try {
             data = FXCollections.observableArrayList(
-                    service.rankingById(new InicioController().getIdJugador())
+                    secondaryService.rankingById(App.getIdJugador())
             );
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("No se puede mostrar el ranking individual");
@@ -75,6 +72,8 @@ public class SecondaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        secondaryService = new SecondaryService();
 
         TableColumn<Join, Integer> puesto = new TableColumn<>("TOP");
         puesto.setMinWidth(100);
