@@ -1,7 +1,8 @@
 package org.example.fx.services;
 
+import org.example.fx.cliente.ClienteIncio;
 import org.example.fx.modelBDD.manager.impl.PlayerManagerImpl;
-import org.example.fx.modelBDD.dao.Player;
+import org.example.fx.cliente.dto.Player;
 import org.example.fx.modelBDD.main.MySQLConnector;
 
 import java.sql.Connection;
@@ -12,12 +13,15 @@ import java.util.List;
 public class InicioService {
 
     public void insertarJugador(String nombre, String contraseña) {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
-            new PlayerManagerImpl().insert(con, nombre, encodedString);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+//        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+//            String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
+//            new PlayerManagerImpl().insert(con, nombre, encodedString);
+//        } catch (SQLException | ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+        new ClienteIncio().insertarPlayer(nombre, contraseña);
+
     }
 
     public List<Player> buscarJugadores () throws SQLException, ClassNotFoundException {

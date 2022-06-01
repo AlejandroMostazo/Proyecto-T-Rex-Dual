@@ -1,7 +1,7 @@
 //package dao;
 //
 //import org.example.fx.modelBDD.dao.Join;
-//import org.example.fx.modelBDD.dao.Player;
+//import org.example.fx.cliente.dto.Player;
 //import org.junit.jupiter.api.*;
 //import org.junit.jupiter.api.extension.ExtendWith;
 //import org.mockito.Mock;

@@ -1,7 +1,7 @@
 package manager.impl;
 
 
-import org.example.fx.modelBDD.dao.Player;
+import org.example.fx.cliente.dto.Player;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;

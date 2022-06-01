@@ -17,7 +17,7 @@ import org.example.fx.App;
 import org.example.fx.controller.exeption.ConnectionException;
 import org.example.fx.controller.exeption.UserNotValidException;
 
-import org.example.fx.modelBDD.dao.Player;
+import org.example.fx.cliente.dto.Player;
 import org.example.fx.modelBDD.main.MySQLConnector;
 import org.example.fx.services.InicioService;
 
@@ -52,6 +52,7 @@ public class InicioController implements Initializable, EventListener {
 
     public void crearJugador () {
         try {
+            UserNotValidException.printMenssage(text.getText(), password.getText());
             if (!(text.getText().equals("")) && !(password.getText().equals("")) && service.buscarJugadorByName(text.getText()) == null) {
                 service.insertarJugador(text.getText(), password.getText());
                 App.setIdJugador(conseguirID());

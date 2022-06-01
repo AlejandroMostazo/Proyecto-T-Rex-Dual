@@ -1,5 +1,6 @@
-package org.example.fx.modelBDD.dao;
+package org.example.fx.cliente.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@XmlRootElement
 @Builder
 public class Player implements Comparable<Player>{
 
