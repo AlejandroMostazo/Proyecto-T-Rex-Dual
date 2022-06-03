@@ -1,7 +1,7 @@
 package manager.impl;
 
 
-import org.example.fx.cliente.dto.Player;
+import org.example.fx.modelBDD.dao.Player;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -64,7 +64,7 @@ class TestPlayerManagerImpl {
             }
         });
         when(resultSet.getInt(any())).thenReturn(expectedPlayer.getId());
-        when(resultSet.getInt(any())).thenAnswer(new Answer<String>() {
+        when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
 
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -94,13 +94,13 @@ class TestPlayerManagerImpl {
                 .contraseña("google")
                 .build();
 
-        when(connection.createStatement()).thenReturn(statement);
-        when(statement.executeQuery(any())).thenReturn(resultSet);
+        when(connection.prepareStatement(any())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.getInt(any())).thenReturn(expectedPlayer.getId());
-        when(resultSet.getInt(any())).thenAnswer(new Answer<String>() {
+        when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
 
             @Override
-            public String answer(InvocationOnMock invocationOnMock) throws Throwable {
+            public String answer(InvocationOnMock invocationOnMock)  {
                 if(invocationOnMock.getArgument(0).equals("nombre")){
                     return expectedPlayer.getName();
                 } else if(invocationOnMock.getArgument(0).equals("contraseña")) {
@@ -111,7 +111,7 @@ class TestPlayerManagerImpl {
             }
         });
 
-        Player playerList = playerManager.findByName(connection, "Google");
+        Player playerList = playerManager.findByName(connection, expectedPlayer.getName());
 
         MatcherAssert.assertThat(playerList, Matchers.is(expectedPlayer));
 
@@ -127,10 +127,10 @@ class TestPlayerManagerImpl {
                 .contraseña("google")
                 .build();
 
-        when(connection.createStatement()).thenReturn(statement);
-        when(statement.executeQuery(any())).thenReturn(resultSet);
+        when(connection.prepareStatement(any())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.getInt(any())).thenReturn(expectedPlayer.getId());
-        when(resultSet.getInt(any())).thenAnswer(new Answer<String>() {
+        when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
 
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {

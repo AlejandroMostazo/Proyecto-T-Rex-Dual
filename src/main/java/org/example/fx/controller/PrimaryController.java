@@ -91,7 +91,6 @@ public class PrimaryController implements Initializable, EventListener {
             ranking.setStyle("-fx-opacity: 1;");
             cerrarSesion.setStyle("-fx-opacity: 1;");
             PrimaryService primaryService = new PrimaryService();
-            System.out.println(LocalDateTime.now());
             primaryService.insertarPuntuacion(puntuacion, LocalDateTime.now(), App.getIdJugador());
             return true;
         }  return false;

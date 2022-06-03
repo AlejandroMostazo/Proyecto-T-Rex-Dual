@@ -1,5 +1,7 @@
 package org.example.fx.services;
 
+import org.example.fx.cliente.ClientePrimary;
+import org.example.fx.cliente.ClienteSecondary;
 import org.example.fx.modelBDD.manager.impl.JoinManagerImpl;
 
 import org.example.fx.modelBDD.dao.Join;
@@ -23,11 +25,13 @@ public class SecondaryService {
 //    }
 
     public List<Join> ranking () throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-           return new JoinManagerImpl().findAll(con);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw e;
-        }
+//        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+//           return new JoinManagerImpl().findAll(con);
+//        } catch (SQLException | ClassNotFoundException e) {
+//            throw e;
+//        }
+
+       return new ClienteSecondary().ranking();
     }
 
 

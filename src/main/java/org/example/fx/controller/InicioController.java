@@ -17,7 +17,7 @@ import org.example.fx.App;
 import org.example.fx.controller.exeption.ConnectionException;
 import org.example.fx.controller.exeption.UserNotValidException;
 
-import org.example.fx.cliente.dto.Player;
+import org.example.fx.modelBDD.dao.Player;
 import org.example.fx.modelBDD.main.MySQLConnector;
 import org.example.fx.services.InicioService;
 

@@ -1,14 +1,9 @@
 package org.example.fx.services;
 
 import org.example.fx.cliente.ClienteIncio;
-import org.example.fx.modelBDD.manager.impl.PlayerManagerImpl;
-import org.example.fx.cliente.dto.Player;
-import org.example.fx.modelBDD.main.MySQLConnector;
+import org.example.fx.modelBDD.dao.Player;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Base64;
-import java.util.List;
 
 public class InicioService {
 
@@ -24,28 +19,31 @@ public class InicioService {
 
     }
 
-    public List<Player> buscarJugadores () throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-
-           return new PlayerManagerImpl().findAll(con);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw e;
-        }
-    }
+//    public List<Player> buscarJugadores () throws SQLException, ClassNotFoundException {
+//        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+//
+//           return new PlayerManagerImpl().findAll(con);
+//        } catch (SQLException | ClassNotFoundException e) {
+//            throw e;
+//        }
+//    }
 
     public boolean validarJugador(String nombre, String contraseña) throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
-           return new PlayerManagerImpl().validatePlayer(con, nombre, encodedString) != null;
-        }
+//        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+//            String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
+//           return new PlayerManagerImpl().validatePlayer(con, nombre, encodedString) != null;
+//        }
+        return new ClienteIncio().checkPlayer(nombre, contraseña);
     }
 
     public Player buscarJugadorByName (String nombre) throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return new PlayerManagerImpl().findByName(con, nombre);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw e;
-        }
+//        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+//            return new PlayerManagerImpl().findByName(con, nombre);
+//        } catch (SQLException | ClassNotFoundException e) {
+//            throw e;
+//        }
+
+        return new ClienteIncio().searchPlayerByName(nombre);
     }
 
 }

@@ -16,6 +16,5 @@ module org.example.fx {
     opens org.example.fx.modelBDD.dao to javafx.fxml;
 
     exports org.example.fx.modelBDD.manager.impl;
-    exports org.example.fx.cliente.dto;
 
 }

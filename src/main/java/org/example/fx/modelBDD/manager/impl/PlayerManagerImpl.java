@@ -1,7 +1,7 @@
 package org.example.fx.modelBDD.manager.impl;
 
 
-import org.example.fx.cliente.dto.Player;
+import org.example.fx.modelBDD.dao.Player;
 import org.example.fx.modelBDD.manager.PlayerMaganager;
 
 import java.sql.*;

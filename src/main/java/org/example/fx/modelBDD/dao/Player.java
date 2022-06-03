@@ -1,4 +1,4 @@
-package org.example.fx.cliente.dto;
+package org.example.fx.modelBDD.dao;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
@@ -12,6 +12,7 @@ import java.sql.SQLException;
 @AllArgsConstructor
 @NoArgsConstructor
 @XmlRootElement
+@EqualsAndHashCode
 @Builder
 public class Player implements Comparable<Player>{
 

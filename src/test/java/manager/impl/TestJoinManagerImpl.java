@@ -66,7 +66,7 @@ class TestJoinManagerImpl {
                 }
             }
         });
-        when(resultSet.getDate(any())).thenReturn((Date) java.util.Date.from(expectedJoin.getFecha().atZone(ZoneId.systemDefault()).toInstant()));
+        when(resultSet.getTimestamp(any())).thenReturn(Timestamp.valueOf(expectedJoin.getFecha()));
         when(resultSet.getString(any())).thenReturn(expectedJoin.getNombre());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
@@ -116,7 +116,7 @@ class TestJoinManagerImpl {
             }
         });
 
-        when(resultSet.getDate(any())).thenReturn((Date) java.util.Date.from(expectedJoin.getFecha().atZone(ZoneId.systemDefault()).toInstant()));
+        when(resultSet.getTimestamp(any())).thenReturn(Timestamp.valueOf(expectedJoin.getFecha()));
         when(resultSet.getString(any())).thenReturn(expectedJoin.getNombre());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 

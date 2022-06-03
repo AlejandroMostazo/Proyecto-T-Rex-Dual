@@ -1,5 +1,6 @@
 package org.example.fx.modelBDD.dao;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.sql.Date;
@@ -11,6 +12,8 @@ import java.time.ZoneId;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@XmlRootElement
+@EqualsAndHashCode
 @Builder
 public class Join implements Comparable<Join>{
 
