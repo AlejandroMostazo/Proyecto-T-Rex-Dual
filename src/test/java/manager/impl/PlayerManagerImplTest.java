@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class TestPlayerManagerImpl {
+class PlayerManagerImplTest {
 
     @Mock
     private Connection connection;

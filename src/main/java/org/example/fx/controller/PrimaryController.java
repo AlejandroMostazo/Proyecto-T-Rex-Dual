@@ -18,9 +18,14 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.fx.App;
 import org.example.fx.controller.exeption.KeyNotValidException;
+import org.example.fx.services.InicioService;
 import org.example.fx.services.PrimaryService;
+import org.example.fx.services.SecondaryService;
 
 public class PrimaryController implements Initializable, EventListener {
+
+
+    private PrimaryService primaryService;
 
     @FXML
     private ImageView trex;
@@ -83,15 +88,16 @@ public class PrimaryController implements Initializable, EventListener {
         }
     }
 
+
     public boolean gameOver () {
-        if ((isCactusInRange() || isCactus2InRange()) && trex.getTranslateY() >= 165 ) {
+        if ((isCactusInRange() || isCactus2InRange()) && trex.getTranslateY() >= 165) {
+            primaryService.insertarPuntuacion(puntuacion, App.getIdJugador());
             animationTimer.stop();
             translaterex.stop();
             restart.setStyle("-fx-opacity: 1;");
             ranking.setStyle("-fx-opacity: 1;");
             cerrarSesion.setStyle("-fx-opacity: 1;");
-            PrimaryService primaryService = new PrimaryService();
-            primaryService.insertarPuntuacion(puntuacion, LocalDateTime.now(), App.getIdJugador());
+            System.out.println(App.getIdJugador()+" "+puntuacion);
             return true;
         }  return false;
     }
@@ -144,6 +150,8 @@ public class PrimaryController implements Initializable, EventListener {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        primaryService = new PrimaryService();
 
         translaterex = new TranslateTransition();
 

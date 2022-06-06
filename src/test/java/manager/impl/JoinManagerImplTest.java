@@ -14,7 +14,6 @@ import org.mockito.stubbing.Answer;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class TestJoinManagerImpl {
+class JoinManagerImplTest {
 
     @Mock
     private Connection connection;

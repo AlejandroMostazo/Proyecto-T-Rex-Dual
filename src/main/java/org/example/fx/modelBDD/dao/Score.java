@@ -1,5 +1,6 @@
 package org.example.fx.modelBDD.dao;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.sql.Date;
@@ -14,6 +15,9 @@ import java.time.ZoneId;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@XmlRootElement
+@EqualsAndHashCode
+@Builder
 public class Score implements Comparable<Score>{
 
     int id;
@@ -28,7 +32,7 @@ public class Score implements Comparable<Score>{
             this.id = result.getInt("id");
             this.puntuacion = result.getInt("puntuacion");
             this.player = result.getInt("idplayer");
-            this.fecha = result.getDate("date").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            this.fecha = result.getTimestamp("date").toLocalDateTime();
         } catch (SQLException e) {
             System.out.println("No se puede acceder a la base de datos");
             e.printStackTrace();

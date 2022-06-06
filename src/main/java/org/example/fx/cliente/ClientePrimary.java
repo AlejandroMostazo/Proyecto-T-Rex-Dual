@@ -6,7 +6,6 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 
-import java.time.LocalDateTime;
 
 public class ClientePrimary {
 
@@ -17,8 +16,8 @@ public class ClientePrimary {
         this.webTarget = client.target("http://localhost:8081/webservice/api/");
     }
 
-    public void insertarPuntos(int puntuacion, LocalDateTime fecha, int idplayer) {
-        webTarget.path("game/score/"+puntuacion+"/"+fecha+"/"+idplayer)
+    public void insertarPuntos(int puntuacion, int idplayer) {
+        webTarget.path("game/score/"+puntuacion+"/"+idplayer)
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity("",MediaType.APPLICATION_JSON));
     }

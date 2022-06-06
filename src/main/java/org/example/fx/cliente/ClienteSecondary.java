@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import org.example.fx.modelBDD.dao.Join;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteSecondary {
@@ -19,13 +20,19 @@ public class ClienteSecondary {
     }
 
     public List<Join> ranking() {
-        return webTarget.path("tabe/ranking")
-                .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Join>>(){});
+        List<Join> machines = webTarget.path("table/ranking")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(new GenericType<List<Join>>() {
+        });
+        List<Join> hostnames = new ArrayList<>(machines.size());
+        for (Join machine : machines) {
+            hostnames.add(machine);
+        }
+        return hostnames;
     }
 
     public List<Join> rankingId(int id) {
-        return webTarget.path("table/ranking/"+id)
+        return webTarget.path("table/rankingId/"+id)
                 .request(MediaType.APPLICATION_JSON)
                 .get(new GenericType<List<Join>>(){});
     }

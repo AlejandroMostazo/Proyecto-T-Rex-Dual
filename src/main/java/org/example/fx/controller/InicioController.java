@@ -46,6 +46,7 @@ public class InicioController implements Initializable, EventListener {
         try {
             return Stream.of(service.buscarJugadorByName(text.getText())).mapToInt(Player::getId).findFirst().getAsInt();
         } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No se puede obtener el id del usuario");
             throw new RuntimeException(e);
         }
     }
