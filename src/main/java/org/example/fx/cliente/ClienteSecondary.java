@@ -5,7 +5,8 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
-import org.example.fx.modelBDD.dao.Join;
+import org.example.fx.cliente.dto.Join;
+
 
 import java.util.ArrayList;
 import java.util.List;

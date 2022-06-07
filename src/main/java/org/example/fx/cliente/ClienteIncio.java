@@ -5,7 +5,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
-import org.example.fx.modelBDD.dao.Player;
+import org.example.fx.cliente.dto.Player;
 
 public class ClienteIncio {
 
@@ -17,15 +17,15 @@ public class ClienteIncio {
     }
 
     public void insertarPlayer(String nombre, String contraseña) {
-        webTarget.path("inicio/insertar/"+nombre+"/"+contraseña)
+        webTarget.path("inicio")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity("",MediaType.APPLICATION_JSON));
+                .post(Entity.entity(new Player(nombre, contraseña),MediaType.APPLICATION_JSON));
     }
 
     public boolean checkPlayer(String nombre, String contraseña) {
-        return webTarget.path("inicio/validar/"+nombre+"/"+contraseña)
+        return webTarget.path("inicio/validar")
                 .request(MediaType.APPLICATION_JSON)
-                .get(boolean.class);
+                .post(Entity.entity(new Player(nombre, contraseña), MediaType.APPLICATION_JSON), boolean.class);
     }
 
     public Player searchPlayerByName(String nombre) {

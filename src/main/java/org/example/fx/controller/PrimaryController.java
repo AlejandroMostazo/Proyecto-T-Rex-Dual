@@ -18,9 +18,8 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.fx.App;
 import org.example.fx.controller.exeption.KeyNotValidException;
-import org.example.fx.services.InicioService;
 import org.example.fx.services.PrimaryService;
-import org.example.fx.services.SecondaryService;
+
 
 public class PrimaryController implements Initializable, EventListener {
 

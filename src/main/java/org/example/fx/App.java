@@ -18,7 +18,7 @@ public class App extends Application {
 
     @Getter
     @Setter
-    public static int idJugador;
+    public static int idJugador = 0;
 
     private static Scene scene;
 

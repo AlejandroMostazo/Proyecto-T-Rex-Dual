@@ -2,11 +2,8 @@ package org.example.fx.services;
 
 import org.example.fx.cliente.ClientePrimary;
 import org.example.fx.cliente.ClienteSecondary;
-import org.example.fx.modelBDD.manager.impl.JoinManagerImpl;
+import org.example.fx.cliente.dto.Join;
 
-import org.example.fx.modelBDD.dao.Join;
-
-import org.example.fx.modelBDD.main.MySQLConnector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,11 +33,12 @@ public class SecondaryService {
 
 
     public List<Join> rankingById (int id) throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return new JoinManagerImpl().findById(con, id);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw e;
-        }
+//        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+//            return new JoinManagerImpl().findById(con, id);
+//        } catch (SQLException | ClassNotFoundException e) {
+//            throw e;
+//        }
+        return new ClienteSecondary().rankingId(id);
     }
 
 }

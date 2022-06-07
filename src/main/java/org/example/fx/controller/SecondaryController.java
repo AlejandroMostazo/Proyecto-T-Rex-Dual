@@ -15,7 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.fx.App;
-import org.example.fx.modelBDD.dao.Join;
+import org.example.fx.cliente.dto.Join;
 import org.example.fx.services.SecondaryService;
 
 public class SecondaryController implements Initializable {
@@ -54,21 +54,21 @@ public class SecondaryController implements Initializable {
     }
 
 
-    public void rankingIndividual() {
-
-        tabla.getItems().clear();
-
-        final ObservableList<Join> data;
-        try {
-            data = FXCollections.observableArrayList(
-                    secondaryService.rankingById(App.getIdJugador())
-            );
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("No se puede mostrar el ranking individual");
-            throw new RuntimeException(e);
-        }
-        tabla.getItems().addAll(data);
-    }
+//    public void rankingIndividual() {
+//
+//        tabla.getItems().clear();
+//
+//        final ObservableList<Join> data;
+//        try {
+//            data = FXCollections.observableArrayList(
+//                    secondaryService.rankingById(App.getIdJugador())
+//            );
+//        } catch (SQLException | ClassNotFoundException e) {
+//            System.out.println("No se puede mostrar el ranking individual");
+//            throw new RuntimeException(e);
+//        }
+//        tabla.getItems().addAll(data);
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
