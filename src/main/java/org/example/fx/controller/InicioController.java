@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.EventListener;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -96,6 +97,7 @@ public class InicioController implements Initializable, EventListener {
         service.insertarJugador(text.getText(), password.getText(), email.getText());
         App.setIdJugador(conseguirID());
         App.setRoot("primary");
+
     }
 
     public void crearJugador () {
@@ -111,6 +113,9 @@ public class InicioController implements Initializable, EventListener {
                 singin.setVisible(false);
                 imagen1.setVisible(false);
                 imagen2.setVisible(false);
+                existe.setVisible(false);
+                noExiste.setVisible(false);
+                error.setVisible(false);
             } else {
                 throw new UserNotValidException("Ususario ya existente");
             }

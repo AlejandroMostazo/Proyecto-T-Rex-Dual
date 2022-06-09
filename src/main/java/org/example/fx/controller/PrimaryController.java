@@ -2,9 +2,12 @@ package org.example.fx.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.EventListener;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
@@ -89,7 +92,7 @@ public class PrimaryController implements Initializable, EventListener {
 
 
     public boolean gameOver () {
-        if ((isCactusInRange() || isCactus2InRange()) && trex.getTranslateY() >= 165) {
+        if ((isCactusInRange.get() || isCactus2InRange.get()) && trex.getTranslateY() >= 165) {
             primaryService.insertarPuntuacion(puntuacion, App.getIdJugador());
             animationTimer.stop();
             translaterex.stop();
@@ -101,13 +104,11 @@ public class PrimaryController implements Initializable, EventListener {
         }  return false;
     }
 
-    private boolean isCactus2InRange() {
-        return cactuc1.getTranslateX() < trex.getTranslateX() + 50 && cactuc1.getTranslateX() > trex.getTranslateX();
-    }
+    Supplier<Boolean> isCactus2InRange = () ->  cactuc1.getTranslateX() < trex.getTranslateX() + 50 && cactuc1.getTranslateX() > trex.getTranslateX();
 
-    private boolean isCactusInRange() {
-        return cactuc.getTranslateX() < trex.getTranslateX() + 50 && cactuc.getTranslateX() > trex.getTranslateX();
-    }
+    Supplier<Boolean> isCactusInRange = () ->  cactuc.getTranslateX() < trex.getTranslateX() + 50 && cactuc.getTranslateX() > trex.getTranslateX();
+
+
 
     public void restart() throws IOException {
         App.setRoot("primary");
@@ -115,17 +116,19 @@ public class PrimaryController implements Initializable, EventListener {
 
     int puntuacion = 0;
 
+
         final long startNanoTime = System.nanoTime();
         AnimationTimer animationTimer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-                    puntuacion = (int)(t*t);
+                Consumer<ImageView> Animacion = (imagen) -> imagen.setTranslateX(imagen.getTranslateX() - (t/5 + 7));
+                puntuacion = (int)(t*t);
                     score.setText("Score: "+puntuacion);
                     nube.setTranslateX(nube.getTranslateX() - 4);
-                    cactuc.setTranslateX(cactuc.getTranslateX() - (t/5 + 7));
-                    cactuc1.setTranslateX(cactuc1.getTranslateX() - (t/5 + 7));
-                    suelo.setTranslateX(suelo.getTranslateX() - (t/5 + 7));
-                    suelo2.setTranslateX(suelo2.getTranslateX() - (t/5 + 7));
+                    Animacion.accept(cactuc);
+                    Animacion.accept(cactuc1);
+                    Animacion.accept(suelo);
+                    Animacion.accept(suelo2);
                 if (cactuc.getTranslateX() < -50) {
                     cactuc.setTranslateX(cactuc1.getTranslateX() + Math.random()*(900-854)+854);
                 }
@@ -145,6 +148,8 @@ public class PrimaryController implements Initializable, EventListener {
                 gameOver();
             }
         };
+
+
 
 
     @Override
