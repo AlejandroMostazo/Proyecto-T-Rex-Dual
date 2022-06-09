@@ -16,10 +16,10 @@ public class ClienteIncio {
         this.webTarget = client.target("http://localhost:8081/webservice/api/");
     }
 
-    public void insertarPlayer(String nombre, String contraseña) {
+    public void insertarPlayer(String nombre, String contraseña, String email) {
         webTarget.path("inicio")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(new Player(nombre, contraseña),MediaType.APPLICATION_JSON));
+                .post(Entity.entity(new Player(nombre, contraseña, email),MediaType.APPLICATION_JSON));
     }
 
     public boolean checkPlayer(String nombre, String contraseña) {

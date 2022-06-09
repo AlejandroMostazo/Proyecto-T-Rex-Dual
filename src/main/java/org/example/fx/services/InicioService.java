@@ -8,7 +8,7 @@ import java.util.Base64;
 
 public class InicioService {
 
-    public void insertarJugador(String nombre, String contraseña) {
+    public void insertarJugador(String nombre, String contraseña, String email) {
 //        try (Connection con = new MySQLConnector().getMySQLConnection()) {
 //
 //            new PlayerManagerImpl().insert(con, nombre, encodedString);
@@ -17,7 +17,7 @@ public class InicioService {
 //        }
 //
         String encodedString = Base64.getEncoder().encodeToString(contraseña.getBytes());
-        new ClienteIncio().insertarPlayer(nombre, encodedString);
+        new ClienteIncio().insertarPlayer(nombre, encodedString, email);
 
     }
 

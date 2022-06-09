@@ -16,11 +16,29 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    @Getter
-    @Setter
     public static int idJugador = 0;
 
+    public static String emailJugador = "";
+
     private static Scene scene;
+
+    public static int getIdJugador() {
+        return idJugador;
+    }
+
+
+    public static void setIdJugador(int idJugador) {
+        App.idJugador = idJugador;
+    }
+
+    public static void setemailJugador(String emailJugador) {
+        App.emailJugador = emailJugador;
+    }
+
+    public static String getemailJugador() {
+        return emailJugador;
+    }
+
 
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("inicio"));

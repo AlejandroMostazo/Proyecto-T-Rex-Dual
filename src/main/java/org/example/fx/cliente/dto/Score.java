@@ -1,8 +1,6 @@
 package org.example.fx.cliente.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -10,25 +8,23 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class Join  {
+public class Score {
+    int id;
+    int puntuacion;
+    LocalDateTime fecha;
+    int player;
 
-    int puesto;
-    String nombre;
-
-    public int getPuesto() {
-        return puesto;
+    public Score(int puntuacion, int idplayer) {
+        this.puntuacion = puntuacion;
+        this.player = idplayer;
     }
 
-    public void setPuesto(int puesto) {
-        this.puesto = puesto;
+    public int getId() {
+        return id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPuntuacion() {
@@ -47,7 +43,11 @@ public class Join  {
         this.fecha = fecha;
     }
 
-    int puntuacion;
-    LocalDateTime fecha;
+    public int getPlayer() {
+        return player;
+    }
 
+    public void setPlayer(int player) {
+        this.player = player;
+    }
 }

@@ -11,16 +11,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import org.example.fx.App;
 import org.example.fx.cliente.dto.Join;
+import org.example.fx.services.EmailService;
 import org.example.fx.services.SecondaryService;
 
 public class SecondaryController implements Initializable {
 
     private SecondaryService secondaryService;
+
+    @FXML
+    private Label textmundial;
+
+    @FXML
+    private Button enviar;
 
     @FXML
     public void switchToPrimary() throws IOException {
@@ -36,6 +46,9 @@ public class SecondaryController implements Initializable {
     private TableView tabla;
 
     public void rankingMundial() {
+
+        textmundial.setVisible(true);
+        enviar.setVisible(false);
 
         tabla.getItems().clear();
 
@@ -54,21 +67,28 @@ public class SecondaryController implements Initializable {
     }
 
 
-//    public void rankingIndividual() {
-//
-//        tabla.getItems().clear();
-//
-//        final ObservableList<Join> data;
-//        try {
-//            data = FXCollections.observableArrayList(
-//                    secondaryService.rankingById(App.getIdJugador())
-//            );
-//        } catch (SQLException | ClassNotFoundException e) {
-//            System.out.println("No se puede mostrar el ranking individual");
-//            throw new RuntimeException(e);
-//        }
-//        tabla.getItems().addAll(data);
-//    }
+    public void rankingIndividual() {
+
+        textmundial.setVisible(false);
+        enviar.setVisible(true);
+
+        tabla.getItems().clear();
+
+        final ObservableList<Join> data;
+        try {
+            data = FXCollections.observableArrayList(
+                    secondaryService.rankingById(App.getIdJugador())
+            );
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No se puede mostrar el ranking individual");
+            throw new RuntimeException(e);
+        }
+        tabla.getItems().addAll(data);
+    }
+
+    public void enviarEmail() {
+        new EmailService().sendRanking(App.getemailJugador(), App.getIdJugador());
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

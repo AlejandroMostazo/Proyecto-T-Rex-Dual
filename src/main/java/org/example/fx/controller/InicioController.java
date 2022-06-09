@@ -3,6 +3,7 @@ package org.example.fx.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.EventListener;
 import java.util.ResourceBundle;
 
@@ -17,7 +18,7 @@ import lombok.SneakyThrows;
 import org.example.fx.App;
 import org.example.fx.controller.exeption.UserNotValidException;
 
-import org.example.fx.email.Sender;
+import org.example.fx.services.EmailService;
 import org.example.fx.services.InicioService;
 
 
@@ -62,6 +63,8 @@ public class InicioController implements Initializable, EventListener {
     @FXML
     private Text existe;
 
+
+
     private int conseguirID() {
         try {
             return service.buscarJugadorByName(text.getText()).getId();
@@ -71,12 +74,27 @@ public class InicioController implements Initializable, EventListener {
         }
     }
 
+    public String conseguirEmail() {
+        try {
+            if (service.buscarJugadorByName(text.getText()).getEmail() != null) {
+                return service.buscarJugadorByName(text.getText()).getEmail();
+            } else {
+                return null;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No se puede obtener el id del usuario");
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void notificaciones () throws IOException {
-        new Sender().send("alejandro.mostazo.fp@iescampanillas.com", email.getText(), "Tu cuenta ha sido creada con éxito",
-                "<b>Ahora podrás saltar todos los cactus que quieras iniciando sesión con el nombre de "+text.getText()+" y la contraseña " +
-                        "que hayas indicao anteroirmente. </br>" +
-                        "¡Diviertete! :D <b>");
+        if (email.getText() != null) {
+            new EmailService().sendEmail(email.getText(), text.getText());
+        }
+        App.setemailJugador(email.getText());
+        service.insertarJugador(text.getText(), password.getText(), email.getText());
+        App.setIdJugador(conseguirID());
         App.setRoot("primary");
     }
 
@@ -84,8 +102,6 @@ public class InicioController implements Initializable, EventListener {
         try {
             UserNotValidException.printMenssage(text.getText(), password.getText());
             if (!(text.getText().equals("")) && !(password.getText().equals("")) && service.buscarJugadorByName(text.getText()) == null) {
-                service.insertarJugador(text.getText(), password.getText());
-               App.setIdJugador(conseguirID());
                 email.setVisible(true);
                 textemail.setVisible(true);
                 text.setVisible(false);
@@ -114,6 +130,7 @@ public class InicioController implements Initializable, EventListener {
         try {
             if (service.validarJugador(text.getText(), password.getText())) {
                 App.setIdJugador(conseguirID());
+                App.setemailJugador(conseguirEmail());
                 App.setRoot("primary");
             } else {
                 throw new UserNotValidException("Usuario o contraseña invalidos");

@@ -5,8 +5,6 @@ module org.example.fx {
     requires java.sql;
     requires jakarta.ws.rs;
     requires jakarta.xml.bind;
-    requires java.mail;
-    requires activation;
 
     opens org.example.fx to javafx.fxml;
     exports org.example.fx;
